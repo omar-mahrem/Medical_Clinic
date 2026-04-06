@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Confirmation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+            .header h1 {
+                margin: 0;
+                font-size: 28px;
+                font-weight: 600;
+            }
+
+        .content {
+            padding: 40px 30px;
+            color: #333333;
+        }
+
+            .content h2 {
+                color: #667eea;
+                margin-top: 0;
+                font-size: 24px;
+            }
+
+            .content p {
+                line-height: 1.6;
+                margin: 15px 0;
+                font-size: 16px;
+            }
+
+        .button-container {
+            text-align: center;
+            margin: 35px 0;
+        }
+
+        .confirm-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: transform 0.2s;
+        }
+
+            .confirm-button:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+            }
+
+        .info-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+            .info-box p {
+                margin: 0;
+                font-size: 14px;
+                color: #666;
+            }
+
+        .footer {
+            background-color: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666666;
+            font-size: 14px;
+        }
+
+            .footer a {
+                color: #667eea;
+                text-decoration: none;
+            }
+
+        .divider {
+            border: 0;
+            border-top: 1px solid #eeeeee;
+            margin: 30px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏥 Medical Clinic</h1>
+        </div>
+
+        <div class="content">
+            <h2>Welcome, {{name}}! 👋</h2>
+
+            <p>Thank you for registering with Medical Clinic. We're excited to have you as part of our community!</p>
+
+            <p>To complete your registration and activate your account, please confirm your email address by clicking the button below:</p>
+
+            <div class="button-container">
+                <a href="{{confirmation_url}}" class="confirm-button">
+                    Confirm Email Address
+                </a>
+            </div>
+
+            <div class="info-box">
+                <p><strong>⏰ Important:</strong> This confirmation link will expire in 24 hours for security reasons.</p>
+            </div>
+
+            <hr class="divider">
+
+            <p style="font-size: 14px; color: #666;">
+                If the button above doesn't work, copy and paste this link into your browser:
+            </p>
+            <p style="font-size: 13px; word-break: break-all; color: #667eea;">
+                {{confirmation_url}}
+            </p>
+
+            <hr class="divider">
+
+            <p style="font-size: 14px; color: #666;">
+                <strong>Didn't create an account?</strong><br>
+                If you didn't request this email, you can safely ignore it.
+            </p>
+        </div>
+
+        <div class="footer">
+            <p>
+                Need help? Contact us at
+                <a href="mailto:{{support_email}}">{{support_email}}</a>
+            </p>
+            <p style="margin-top: 15px; font-size: 12px; color: #999;">
+                © 2026 Medical Clinic. All rights reserved.<br>
+                This is an automated message, please do not reply to this email.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
