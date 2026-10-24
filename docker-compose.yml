@@ -1,0 +1,64 @@
+services:
+  clinic-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: clinic-sqlserver
+    restart: always
+    user: root
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Clinic@DevPass2026!
+    ports:
+      - "14333:1433"
+    volumes:
+      - clinic_sql_data:/var/opt/mssql/data
+    networks:
+      - clinic-network
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 'Clinic@DevPass2026!' -C -Q 'SELECT 1' || /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'Clinic@DevPass2026!' -Q 'SELECT 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 15s
+
+  clinic-api:
+    build:
+      context: .
+      dockerfile: MedicalClinic.Api/Dockerfile
+    container_name: clinic-backend
+    restart: always
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:8080
+      - ConnectionStrings__DefaultConnection=Server=clinic-db,1433;Database=MedicalClinicDb;User Id=sa;Password=Clinic@DevPass2026!;TrustServerCertificate=True;MultipleActiveResultSets=true;
+      - ConnectionStrings__HangfireConnection=Server=clinic-db,1433;Database=MedicalClinicDb;User Id=sa;Password=Clinic@DevPass2026!;TrustServerCertificate=True;
+      - Jwt__Key=WNIPHhqWBlkHGYOBASHthvQNiRp34Vn2
+      - MailSettings__Password=UdAF2D1e3xq7NHcCTA
+      - HangfireSettings__Username=Admin
+      - HangfireSettings__Password=Admin@2026
+    depends_on:
+      clinic-db:
+        condition: service_healthy
+    networks:
+      - clinic-network
+
+  clinic-client:
+    build:
+      context: ./MedicalClinic.Client
+      dockerfile: Dockerfile
+    container_name: clinic-frontend
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - clinic-api
+    networks:
+      - clinic-network
+
+volumes:
+  clinic_sql_data:
+
+networks:
+  clinic-network:
+    driver: bridge

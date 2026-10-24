@@ -1,43 +1,68 @@
-﻿using Microsoft.AspNetCore.Authorization;
-
 namespace MedicalClinic.Api.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-[Authorize]
+//[Authorize]
 public class PatientsController(IPatientServices patientServices) : ControllerBase
 {
     private readonly IPatientServices _patientServices = patientServices;
 
+    [HttpPost("register")]
+    public async Task<IActionResult> Add([FromBody] CreatePatientRequest request, CancellationToken cancellationToken)
+    {
+        var result = await _patientServices.RegisterAsync(request, cancellationToken);
+
+        return result.IsSuccess ? Ok() : result.ToProblem();
+    }
+
     [HttpGet("")]
+    [HasPermission(Permissions.GetPatients)]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         return Ok(await _patientServices.GetAllAsync(cancellationToken));
     }
-    
-    [HttpGet("current")]
-    public async Task<IActionResult> GetCurrent(CancellationToken cancellationToken)
+
+    [HttpGet("deleted")]
+    [HasPermission(Permissions.GetPatients)]
+    public async Task<IActionResult> GetDeleted(CancellationToken cancellationToken)
     {
-        return Ok(await _patientServices.GetCurrentAsync(cancellationToken));
+        return Ok(await _patientServices.GetDeletedAsync(cancellationToken));
     }
-    
+
+
     [HttpGet("{id}")]
+    [HasPermission(Permissions.GetPatients)]
     public async Task<IActionResult> Get(int id, CancellationToken cancellationToken)
     {
         var result = await _patientServices.GetAsync(id, cancellationToken);
-        return result.IsSuccess
-            ? Ok(result.Value)
-            : result.ToProblem();
+        return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
     }
 
-    [HttpPost("")]
-    public async Task<IActionResult> Add(PatientRequest request, CancellationToken cancellationToken)
+    [HttpPut("{id}")]
+    [HasPermission(Permissions.UpdatePatients)]
+    public async Task<IActionResult> Update([FromRoute] int id, [FromBody] UpdatePatientRequest request, CancellationToken cancellationToken)
     {
-        var result = await _patientServices.AddAsync(request, cancellationToken);
+        var result = await _patientServices.UpdateAsync(id, request, cancellationToken);
 
-        return result.IsSuccess
-            ? CreatedAtAction(nameof(Get), new { result.Value.Id }, result.Value)
-            : result.ToProblem();
+        return result.IsSuccess ? NoContent() : result.ToProblem();
+    }
+
+    [HttpDelete("{id}")]
+    [HasPermission(Permissions.DeletePatients)]
+    public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        var result = await _patientServices.DeleteAsync(id, cancellationToken);
+
+        return result.IsSuccess ? NoContent() : result.ToProblem();
+    }
+
+    [HttpPut("{id}/restore")]
+    [HasPermission(Permissions.ResetPatients)]
+    public async Task<IActionResult> Restore([FromRoute] int id, CancellationToken cancellationToken)
+    {
+        var result = await _patientServices.RestoreAsync(id, cancellationToken);
+
+        return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
 

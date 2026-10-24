@@ -361,3 +361,8 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+# Local Agent and Temp Files
+.agents/
+skills-lock.json
+clinic-design-preview.html
+.angular/

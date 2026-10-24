@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .appointment-card {
+            background: #f8f9fa;
+            border-left: 4px solid #eb3349;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 4px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>❌ Appointment Cancelled</h1>
+        </div>
+        <div class="content">
+            <h2>Hi {{patient_name}},</h2>
+            <p>Your appointment has been cancelled.</p>
+            <div class="appointment-card">
+                <p><strong>👨‍⚕️ Doctor:</strong> {{doctor_name}} ({{specialization}})</p>
+                <p><strong>📅 Date:</strong> {{appointment_date}}</p>
+                <p><strong>🕐 Time:</strong> {{appointment_time}}</p>
+            </div>
+            <p>If you'd like to book another appointment, please visit our website.</p>
+        </div>
+        <div class="footer">
+            <p>Medical Clinic</p>
+        </div>
+    </div>
+</body>
+</html>

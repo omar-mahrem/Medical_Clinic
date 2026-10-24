@@ -1,24 +1,26 @@
-﻿global using System.Reflection;
-
-global using Microsoft.AspNetCore.Mvc;
+global using MedicalClinic.Core.Abstractions;
+global using MedicalClinic.Core.Abstractions.Const;
+global using MedicalClinic.Core.Entities;
+global using MedicalClinic.Core.Errors;
+global using MedicalClinic.Application;
+global using MedicalClinic.Application.Common;
+global using MedicalClinic.Application.Common.Interfaces;
+global using MedicalClinic.Application.Contract.Appointment;
+global using MedicalClinic.Application.Contract.Authentication;
+global using MedicalClinic.Application.Contract.Common;
+global using MedicalClinic.Application.Contract.ConfirmationSetup;
+global using MedicalClinic.Application.Contract.Doctor;
+global using MedicalClinic.Application.Contract.MedicalRecord;
+global using MedicalClinic.Application.Contract.Patient;
+global using MedicalClinic.Application.Contract.Roles;
+global using MedicalClinic.Application.Contract.User;
+global using MedicalClinic.Application.Extentions;
+global using MedicalClinic.Application.Services;
+global using MedicalClinic.Infrastructure;
+global using MedicalClinic.Infrastructure.Authentication.Filters;
+global using MedicalClinic.Infrastructure.Data;
+global using MedicalClinic.Infrastructure.Pdf;
+global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Identity;
-global using Microsoft.EntityFrameworkCore;
-global using Microsoft.EntityFrameworkCore.Metadata.Builders;
-
-global using FluentValidation;
-global using FluentValidation.AspNetCore;
-
-global using Mapster;
-global using MapsterMapper;
-
-global using MedicalClinic.Api;
-global using MedicalClinic.Api.Errors;
-global using MedicalClinic.Api.Services;
-global using MedicalClinic.Api.Entities;
-global using MedicalClinic.Api.Extentions;
-global using MedicalClinic.Api.Persistence;
-global using MedicalClinic.Api.Abstractions;
-global using MedicalClinic.Api.Contract.Doctor;
-global using MedicalClinic.Api.Contract.Patient;
-global using MedicalClinic.Api.Contract.Authentication;
-
+global using Microsoft.AspNetCore.Mvc;
+global using System.Reflection;

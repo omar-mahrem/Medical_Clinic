@@ -1,5 +1,3 @@
-﻿using MedicalClinic.Api.Abstractions;
-
 namespace MedicalClinic.Api.Controllers;
 
 [Route("[controller]")]
@@ -25,7 +23,7 @@ public class AuthController(IAuthServices authServices, ILogger<AuthController> 
 
         return result.IsSuccess ? Ok() : result.ToProblem();
     }
-    
+
     [HttpPost("resend-email-confirmation")]
     public async Task<IActionResult> ResendEmailConfirmation([FromBody] ResendEmailConfirmationRequest request, CancellationToken cancellationToken)
     {
@@ -51,11 +49,27 @@ public class AuthController(IAuthServices authServices, ILogger<AuthController> 
 
         return authResult.IsSuccess ? Ok(authResult.Value) : authResult.ToProblem();
     }
-    
+
     [HttpPut("revoke-refresh-token")]
     public async Task<IActionResult> RevokeRefreshToken([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken)
     {
         var result = await _authServices.RevokeRefreshTokenAsync(request.Token, request.RefreshToken, cancellationToken);
+
+        return result.IsSuccess ? Ok() : result.ToProblem();
+    }
+
+    [HttpPost("forget-password")]
+    public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordRequest request)
+    {
+        var result = await _authServices.SendResetPasswordCodeAsync(request.Email);
+
+        return result.IsSuccess ? Ok() : result.ToProblem();
+    }
+
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+    {
+        var result = await _authServices.ResetPasswordAsync(request);
 
         return result.IsSuccess ? Ok() : result.ToProblem();
     }
