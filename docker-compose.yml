@@ -6,7 +6,7 @@ services:
     user: root
     environment:
       - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD:?copy .env.example to .env and set MSSQL_SA_PASSWORD}
     ports:
       - "14333:1433"
     volumes:
@@ -31,12 +31,12 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Server=clinic-db,1433;Database=MedicalClinicDb;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true;
-      - ConnectionStrings__HangfireConnection=Server=clinic-db,1433;Database=MedicalClinicDb;User Id=sa;Password=${MSSQL_SA_PASSWORD};TrustServerCertificate=True;
-      - Jwt__Key=${JWT_KEY}
-      - MailSettings__Password=${MAIL_APP_PASSWORD}
-      - HangfireSettings__Username=${HANGFIRE_USERNAME}
-      - HangfireSettings__Password=${HANGFIRE_PASSWORD}
+      - ConnectionStrings__DefaultConnection=Server=clinic-db,1433;Database=MedicalClinicDb;User Id=sa;Password=${MSSQL_SA_PASSWORD:?copy .env.example to .env and set MSSQL_SA_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true;
+      - ConnectionStrings__HangfireConnection=Server=clinic-db,1433;Database=MedicalClinicDb;User Id=sa;Password=${MSSQL_SA_PASSWORD:?copy .env.example to .env and set MSSQL_SA_PASSWORD};TrustServerCertificate=True;
+      - Jwt__Key=${JWT_KEY:?copy .env.example to .env and set JWT_KEY}
+      - MailSettings__Password=${MAIL_APP_PASSWORD:?copy .env.example to .env and set MAIL_APP_PASSWORD}
+      - HangfireSettings__Username=${HANGFIRE_USERNAME:-admin}
+      - HangfireSettings__Password=${HANGFIRE_PASSWORD:?copy .env.example to .env and set HANGFIRE_PASSWORD}
     depends_on:
       clinic-db:
         condition: service_healthy
