@@ -366,3 +366,8 @@ FodyWeavers.xsd
 skills-lock.json
 clinic-design-preview.html
 .angular/
+
+# Local secrets
+.env
+.env.*
+!.env.example

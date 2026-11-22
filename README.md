@@ -115,6 +115,10 @@ Run the entire system (Frontend + Backend + Database) in a single command:
 git clone https://github.com/omar-mahrem/Medical_Clinic.git
 cd Medical_Clinic
 
+# Create your local environment file and fill in your own secrets
+cp .env.example .env
+# (Windows: copy .env.example .env) - then edit .env before continuing
+
 # Start all services with Docker Compose
 docker compose up --build -d
 ```
